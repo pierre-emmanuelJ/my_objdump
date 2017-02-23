@@ -5,7 +5,7 @@
 ## Login   <jacqui_p@epitech.eu>
 ##
 ## Started on  Wed Feb 22 11:36:14 2017 Pierre-Emmanuel Jacquier
-## Last update Wed Feb 22 11:46:54 2017 Pierre-Emmanuel Jacquier
+## Last update Thu Feb 23 15:22:09 2017 Pierre-Emmanuel Jacquier
 ##
 
 CC	= cc
@@ -26,15 +26,17 @@ OBJSOBJ	= $(SRCSOBJ:.c=.o)
 
 OBJSNM	= $(SRCSNM:.c=.o)
 
-objdump: $(NAMEOBJ)
+compobjobj:
+	$(CC) -c $(SRCSOBJ)
 
-	$(NAMEOBJ): $(OBJSOBJ)
-	$(CC) -o $(NAMEOBJ) $(OBJSOBJ)
+compobjnm:
+	$(CC) -c $(SRCSNM)
 
-nm: $(NAMENM)
+objdump: compobjobj
+	$(CC) -o my_objdump $(OBJSOBJ)
 
-$(NAMENM): $(OBJSNM)
-	$(CC) -o $(NAMENM) $(OBJSNM)
+nm: compobjnm
+	$(CC) -o my_nm $(OBJSNM)
 
 all: objdump nm
 
