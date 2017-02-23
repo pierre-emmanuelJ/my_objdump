@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 11:54:09 2017 Pierre-Emmanuel Jacquier
-** Last update Thu Feb 23 14:47:35 2017 Pierre-Emmanuel Jacquier
+** Last update Thu Feb 23 16:22:05 2017 Pierre-Emmanuel Jacquier
 */
 
 #ifndef OBJDUBP_H_
@@ -23,9 +23,16 @@
 
 typedef struct s_data_info
 {
-  
+
 }              t_data_info;
 
 #define PRINTER(x, comma) printf("%s%s", comma, x); comma = ", ";
+
+int what_architecture(void *data, size_t datasize);
+void print_sh_name64(Elf64_Shdr *shdr, char *strtab, int shnum);
+void print_sh_name32(Elf32_Shdr *shdr, char *strtab, int shnum);
+int iself_file(void *data, size_t datasize);
+void print_bitset(int flag);
+void get_flag_value(int *flags, Elf64_Ehdr *elf_header, Elf64_Shdr	*shdr, int shnum);
 
 #endif /* !OBJDUBP_H_ */

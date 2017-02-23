@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 10:15:05 2017 Pierre-Emmanuel Jacquier
-** Last update Thu Feb 23 15:03:04 2017 Pierre-Emmanuel Jacquier
+** Last update Thu Feb 23 16:18:22 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
@@ -15,136 +15,20 @@ int filesize(int fd)
   return (lseek(fd, 0, SEEK_END));
 }
 
-void print_sh_name64(Elf64_Shdr *shdr, char *strtab, int shnum)
-{
-  int i;
-
-  i = 0;
-  while (i < shnum)
-    {
-      printf("%02d: %s\n", i, &strtab[shdr[i].sh_name]);
-      i++;
-    }
-}
-
-void print_sh_name32(Elf32_Shdr *shdr, char *strtab, int shnum)
-{
-  int i;
-
-  i = 0;
-  while (i < shnum)
-    {
-      printf("%02d: %s\n", i, &strtab[shdr[i].sh_name]);
-      i++;
-    }
-}
-
-int iself_file(void *data, size_t datasize)
-{
-  char *file;
-
-  if (datasize < 4)
-    return (0);
-  file = (char *)data;
-  if (*file != ELFMAG0)
-    return (0);
-  file++;
-  if (*file != ELFMAG1)
-    return (0);
-  file++;
-  if (*file != ELFMAG2)
-    return (0);
-  file++;
-  if (*file != ELFMAG3)
-    return (0);
-  return (1);
-}
-
-int what_architecture(void *data, size_t datasize)
-{
-  char *file;
-
-  if (datasize < 5)
-    return (ELFCLASSNONE);
-  file = (char *)data;
-  if (file[4] == ELFCLASS32)
-    return (ELFCLASS32);
-  if (file[4] == ELFCLASS64)
-    return (ELFCLASS64);
-  return (ELFCLASSNONE);
-}
-
 void objdump32(void *data, char *file)
 {
-  // Elf32_Ehdr	*elf_header;
-  // Elf32_Shdr	*shdr;
-  // char				*strtab;
-  //
-  //
-  // elf_header = (Elf32_Ehdr*)data;
-  // printf("%s:     file format elf32-i386\n", file);
-  //
-  // printf("architecture: i386, flags %x:\n", flags);
-  // shdr = (Elf32_Shdr*)(data + elf_header->e_shoff);
-  // strtab = (char*)(data + shdr[elf_header->e_shstrndx].sh_offset);
-  // print_sh_name32(shdr, strtab, elf_header->e_shnum);
-}
+  Elf32_Ehdr	*elf_header;
+  Elf32_Shdr	*shdr;
+  char				*strtab;
 
-void bitset_flagheader(int *flags, int type)
-{
-  if (type == ET_REL)
-     *flags |= HAS_RELOC;
-   else if (type == ET_DYN)
-     *flags |= DYNAMIC;
-   else if (type == ET_EXEC)
-     *flags |= EXEC_P;
-}
 
-void bitset_flagsections(int *flags, int type)
-{
-  if (type == SHT_SYMTAB || type == SHT_DYNSYM)
-      *flags |= HAS_SYMS;
-    if (type == SHT_DYNAMIC)
-      *flags |= D_PAGED;
-}
+  elf_header = (Elf32_Ehdr*)data;
+  printf("%s:     file format elf32-i386\n", file);
 
-void print_bitset(int flag)
-{
-  char *comma = "";
-  if (flag & HAS_RELOC)
-    {
-      PRINTER("HAS_RELOC", comma)
-    }
-    if (flag & EXEC_P)
-    {
-      PRINTER("EXEC_P", comma)
-    }
-  if (flag & HAS_SYMS)
-    {
-      PRINTER("HAS_SYMS", comma)
-    }
-  if (flag & DYNAMIC)
-    {
-      PRINTER("DYNAMIC", comma)
-    }
-  if (flag & D_PAGED)
-    {
-      PRINTER("D_PAGED", comma)
-    }
-  printf("\n");
-}
-
-void get_flag_value(int *flags, Elf64_Ehdr *elf_header, Elf64_Shdr	*shdr, int shnum)
-{
-  int i;
-
-  i = 0;
-  bitset_flagheader(flags, elf_header->e_type);
-  while (i < shnum)
-    {
-      bitset_flagsections(flags, shdr[i].sh_type);
-      i++;
-    }
+//  printf("architecture: i386, flags %x:\n", flags);
+  shdr = (Elf32_Shdr*)(data + elf_header->e_shoff);
+  strtab = (char*)(data + shdr[elf_header->e_shstrndx].sh_offset);
+  print_sh_name32(shdr, strtab, elf_header->e_shnum);
 }
 
 void objdump64(void *data, char *file)

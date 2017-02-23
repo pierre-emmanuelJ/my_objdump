@@ -5,7 +5,7 @@
 ## Login   <jacqui_p@epitech.eu>
 ##
 ## Started on  Wed Feb 22 11:36:14 2017 Pierre-Emmanuel Jacquier
-## Last update Thu Feb 23 15:22:09 2017 Pierre-Emmanuel Jacquier
+## Last update Thu Feb 23 16:19:22 2017 Pierre-Emmanuel Jacquier
 ##
 
 CC	= cc
@@ -18,7 +18,11 @@ NAMEOBJ	= my_objdump
 
 NAMENM = my_nm
 
-SRCSOBJ	= objdump.c
+SRCSOBJ	= objdump.c \
+          flags_header.c \
+          architecture.c \
+					elf_check.c
+
 
 SRCSNM	= nm.c
 
@@ -27,10 +31,10 @@ OBJSOBJ	= $(SRCSOBJ:.c=.o)
 OBJSNM	= $(SRCSNM:.c=.o)
 
 compobjobj:
-	$(CC) -c $(SRCSOBJ)
+	$(CC) $(CFLAGS) -c $(SRCSOBJ)
 
 compobjnm:
-	$(CC) -c $(SRCSNM)
+	$(CC) $(CFLAGS) -c $(SRCSNM)
 
 objdump: compobjobj
 	$(CC) -o my_objdump $(OBJSOBJ)
