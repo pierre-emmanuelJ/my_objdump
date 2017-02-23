@@ -5,14 +5,14 @@
 ## Login   <jacqui_p@epitech.eu>
 ##
 ## Started on  Wed Feb 22 11:36:14 2017 Pierre-Emmanuel Jacquier
-## Last update Thu Feb 23 16:19:22 2017 Pierre-Emmanuel Jacquier
+## Last update Thu Feb 23 19:29:33 2017 Pierre-Emmanuel Jacquier
 ##
 
 CC	= cc
 
 RM	= rm -f
 
-CFLAGS	+= -I. -Wall -Wextra
+CFLAGS	+= -I. -Wall -Wextra -g
 
 NAMEOBJ	= my_objdump
 
@@ -21,7 +21,8 @@ NAMENM = my_nm
 SRCSOBJ	= objdump.c \
           flags_header.c \
           architecture.c \
-					elf_check.c
+					elf_check.c \
+					print_sections_content.c
 
 
 SRCSNM	= nm.c

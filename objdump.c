@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 10:15:05 2017 Pierre-Emmanuel Jacquier
-** Last update Thu Feb 23 16:18:22 2017 Pierre-Emmanuel Jacquier
+** Last update Thu Feb 23 19:28:33 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
@@ -33,21 +33,19 @@ void objdump32(void *data, char *file)
 
 void objdump64(void *data, char *file)
 {
-  Elf64_Ehdr	*elf_header;
-  Elf64_Shdr	*shdr;
-  char				*strtab;
-  int					flags;
+  t_data_info info;
 
-  flags = 0;
+  info.flags = 0;
   printf("\n%s:     file format elf64-x86-64\n", file);
-  elf_header = (Elf64_Ehdr*)data;
-  shdr = (Elf64_Shdr*)(data + elf_header->e_shoff);
-  get_flag_value(&flags, elf_header, shdr, elf_header->e_shnum);
-  printf("architecture: i386:x86-64, flags 0x%08x:\n", flags);
-  print_bitset(flags);
-  printf("start address 0x%016zx\n\n", (elf_header->e_entry));
-  strtab = (char*)(data + shdr[elf_header->e_shstrndx].sh_offset);
-  print_sh_name64(shdr, strtab, elf_header->e_shnum);
+  info.elf_header = (Elf64_Ehdr*)data;
+  info.shnum = info.elf_header->e_shnum;
+  info.shdr = (Elf64_Shdr*)(data + info.elf_header->e_shoff);
+  get_flag_value(&info);
+  printf("architecture: i386:x86-64, flags 0x%08x:\n", info.flags);
+  print_bitset(info.flags);
+  printf("start address 0x%016zx\n\n", (info.elf_header->e_entry));
+  info.strtab = (char*)(data + info.shdr[info.elf_header->e_shstrndx].sh_offset);
+  print_all_section(&info);
 }
 
 void objdump(char *file, int fd)
