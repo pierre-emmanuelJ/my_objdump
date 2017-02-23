@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 10:15:05 2017 Pierre-Emmanuel Jacquier
-** Last update Thu Feb 23 11:49:32 2017 Pierre-Emmanuel Jacquier
+** Last update Thu Feb 23 14:50:43 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
@@ -108,6 +108,32 @@ void bitset_flagsections(int *flags, int type)
       *flags |= D_PAGED;
 }
 
+void print_bitset(int flag)
+{
+  char *comma = "";
+  if (flag & HAS_RELOC)
+    {
+      PRINTER("HAS_RELOC", comma)
+    }
+    if (flag & EXEC_P)
+    {
+      PRINTER("EXEC_P", comma)
+    }
+  if (flag & HAS_SYMS)
+    {
+      PRINTER("HAS_SYMS", comma)
+    }
+  if (flag & DYNAMIC)
+    {
+      PRINTER("DYNAMIC", comma)
+    }
+  if (flag & D_PAGED)
+    {
+      PRINTER("D_PAGED", comma)
+    }
+  printf("\n");
+}
+
 void get_flag_value(int *flags, Elf64_Ehdr *elf_header, Elf64_Shdr	*shdr, int shnum)
 {
   int i;
@@ -134,6 +160,7 @@ void objdump64(void *data, char *file)
   shdr = (Elf64_Shdr*)(data + elf_header->e_shoff);
   get_flag_value(&flags, elf_header, shdr, elf_header->e_shnum);
   printf("architecture: i386:x86-64, flags 0x%08x:\n", flags);
+  print_bitset(flags);
   // strtab = (char*)(data + shdr[elf_header->e_shstrndx].sh_offset);
   // print_sh_name64(shdr, strtab, elf_header->e_shnum);
 }
