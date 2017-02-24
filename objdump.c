@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 10:15:05 2017 Pierre-Emmanuel Jacquier
-** Last update Thu Feb 23 19:28:33 2017 Pierre-Emmanuel Jacquier
+** Last update Fri Feb 24 20:08:22 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
@@ -17,18 +17,20 @@ int filesize(int fd)
 
 void objdump32(void *data, char *file)
 {
-  Elf32_Ehdr	*elf_header;
-  Elf32_Shdr	*shdr;
-  char				*strtab;
+  t_data_info info;
 
+  info.flags = 0;
+  printf("\n%s:     file format elf32-i386\n", file);
+  info.elf32_header = (Elf32_Ehdr*)data;
+  info.shnum = info.elf32_header->e_shnum;
+  info.shdr32 = (Elf32_Shdr*)(data + info.elf32_header->e_shoff);
+  get_flag_value32(&info);
+  printf("architecture: i386, flags 0x%08x:\n", info.flags);
+  print_bitset(info.flags);
+  printf("start address 0x%08zx\n\n", (size_t)(info.elf32_header->e_entry));
+  info.strtab = (char*)(data + info.shdr32[info.elf32_header->e_shstrndx].sh_offset);
+  print_all_section32(&info);
 
-  elf_header = (Elf32_Ehdr*)data;
-  printf("%s:     file format elf32-i386\n", file);
-
-//  printf("architecture: i386, flags %x:\n", flags);
-  shdr = (Elf32_Shdr*)(data + elf_header->e_shoff);
-  strtab = (char*)(data + shdr[elf_header->e_shstrndx].sh_offset);
-  print_sh_name32(shdr, strtab, elf_header->e_shnum);
 }
 
 void objdump64(void *data, char *file)
@@ -37,15 +39,15 @@ void objdump64(void *data, char *file)
 
   info.flags = 0;
   printf("\n%s:     file format elf64-x86-64\n", file);
-  info.elf_header = (Elf64_Ehdr*)data;
-  info.shnum = info.elf_header->e_shnum;
-  info.shdr = (Elf64_Shdr*)(data + info.elf_header->e_shoff);
-  get_flag_value(&info);
+  info.elf64_header = (Elf64_Ehdr*)data;
+  info.shnum = info.elf64_header->e_shnum;
+  info.shdr64 = (Elf64_Shdr*)(data + info.elf64_header->e_shoff);
+  get_flag_value64(&info);
   printf("architecture: i386:x86-64, flags 0x%08x:\n", info.flags);
   print_bitset(info.flags);
-  printf("start address 0x%016zx\n\n", (info.elf_header->e_entry));
-  info.strtab = (char*)(data + info.shdr[info.elf_header->e_shstrndx].sh_offset);
-  print_all_section(&info);
+  printf("start address 0x%016zx\n\n", (info.elf64_header->e_entry));
+  info.strtab = (char*)(data + info.shdr64[info.elf64_header->e_shstrndx].sh_offset);
+  print_all_section64(&info);
 }
 
 void objdump(char *file, int fd)

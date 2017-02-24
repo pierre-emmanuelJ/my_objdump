@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Thu Feb 23 16:14:46 2017 Pierre-Emmanuel Jacquier
-** Last update Thu Feb 23 17:16:07 2017 Pierre-Emmanuel Jacquier
+** Last update Fri Feb 24 19:55:12 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
@@ -54,17 +54,33 @@ void print_bitset(int flag)
   printf("\n");
 }
 
-void get_flag_value(t_data_info *info)
+void get_flag_value64(t_data_info *info)
 {
   int i;
   int flags;
 
   flags = 0;
   i = 0;
-  bitset_flagheader(&flags, (info->elf_header)->e_type);
+  bitset_flagheader(&flags, (info->elf64_header)->e_type);
   while (i < info->shnum)
     {
-      bitset_flagsections(&flags, (info->shdr[i]).sh_type);
+      bitset_flagsections(&flags, (info->shdr64[i]).sh_type);
+      i++;
+    }
+  info->flags = flags;
+}
+
+void get_flag_value32(t_data_info *info)
+{
+  int i;
+  int flags;
+
+  flags = 0;
+  i = 0;
+  bitset_flagheader(&flags, (info->elf32_header)->e_type);
+  while (i < info->shnum)
+    {
+      bitset_flagsections(&flags, (info->shdr32[i]).sh_type);
       i++;
     }
   info->flags = flags;
