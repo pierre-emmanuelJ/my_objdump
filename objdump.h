@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 11:54:09 2017 Pierre-Emmanuel Jacquier
-** Last update Thu Feb 23 19:28:49 2017 Pierre-Emmanuel Jacquier
+** Last update Fri Feb 24 18:50:23 2017 Pierre-Emmanuel Jacquier
 */
 
 #ifndef OBJDUBP_H_
@@ -30,6 +30,15 @@ typedef struct s_data_info
   int					shnum;
 
 }              t_data_info;
+
+typedef struct s_section_printer
+{
+  unsigned sh_addr;
+	int sh_size;
+  char *section;
+  int  addr_format;
+}              t_section_printer;
+
 
 #define PRINTER(x, comma) printf("%s%s", comma, x); comma = ", ";
 

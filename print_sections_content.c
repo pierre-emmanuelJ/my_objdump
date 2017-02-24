@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Thu Feb 23 16:32:46 2017 Pierre-Emmanuel Jacquier
-** Last update Fri Feb 24 16:40:13 2017 Pierre-Emmanuel Jacquier
+** Last update Fri Feb 24 19:01:44 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
@@ -24,7 +24,7 @@ static int is_section_to_print(t_data_info *info, int i, int type)
 }
 
 
-int sh_addr_format(int addr, int size)
+int sh_addr_format(unsigned addr, int size)
 {
   int i;
 	int length;
@@ -41,48 +41,61 @@ int sh_addr_format(int addr, int size)
 		return (4);
 }
 
+void print_line(t_section_printer *print, int *pos)
+{
+  int i;
+	int j;
+	int strpos;
+	char str[16];
+
+  i = 0;
+	j = 0;
+	strpos = 0;
+  while (i < 4)
+	{
+		while (j < 4)
+			{
+			  if (*pos < print->sh_size)
+			    {
+			      printf("%02x", *print->section & 0xff);
+			      str[strpos] = *print->section;
+			      print->section++;
+			      strpos++;
+			    }
+			  else
+			    {
+            printf(" ");
+			      str[strpos] = ' ';
+			      strpos++;
+			    }
+			  (*pos)++;
+			  j++;
+			}
+		  j = 0;
+		printf(" ");
+		i++;
+	}
+	print_str(str, );
+}
+
 void print_section(char *section, t_data_info *info, int pos)
 {
-	int line;
-	int sh_addr;
-	int sh_size;
+	t_section_printer print;
 	int i;
-	int j;
-	int k;
-	char str[20];
 
 	i = 0;
-	j = 0;
-	k = 0;
-	line = 0;
-	sh_addr = info->shdr[pos].sh_addr;
-  sh_size = (int)info->shdr[pos].sh_size;
+	print.sh_addr = info->shdr[pos].sh_addr;
+  print.sh_size = (int)info->shdr[pos].sh_size;
+	print.section = section;
 	printf("Contents of section %s:\n", &info->strtab[info->shdr[pos].sh_name]);
-	while(i < sh_size)
-	  {
-      printf("%0*x ", sh_addr_format(sh_addr, sh_size), sh_addr);
-		  while (j < 16)
-			  {
-			    while (k < 4)
-			      {
-			        if (i < sh_size)
-			          {
-			            printf("%02x", *section);
-			            str[j] = *section;
-			            section++;
-                }
-			        else
-				        printf(" ");
-			        i++;
-			        k++;
-			        j++;
-            }
-			    k = 0;
-          printf(" ");
-		    }
-		  j = 0;
+  print.addr_format = sh_addr_format(print.sh_addr, print.sh_size);
+	while (i < print.sh_size)
+    {
+		  printf(" %0*x ", print.addr_format, print.sh_addr);
+		  print_line(&print, &i);
+		  print.sh_addr += 16;
 		  printf("\n");
-	  }
+    }
 }
 
 void print_all_section(t_data_info *info)
