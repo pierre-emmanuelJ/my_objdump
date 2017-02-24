@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 10:15:05 2017 Pierre-Emmanuel Jacquier
-** Last update Fri Feb 24 20:08:22 2017 Pierre-Emmanuel Jacquier
+** Last update Fri Feb 24 21:23:10 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
@@ -55,6 +55,11 @@ void objdump(char *file, int fd)
   void				*data;
   size_t			datasize;
 
+  if (!is_regular_file(file))
+  {
+    fprintf(stderr, "objdump: Warning: '%s' is not an ordinary file\n", file);
+    return ;
+  }
   datasize = filesize(fd);
   data = mmap(NULL, datasize, PROT_READ, MAP_SHARED, fd, 0);
   if (!iself_file(data, datasize))
@@ -79,6 +84,13 @@ int open_file(char *path, int *fd)
       return (0);
     }
   return (1);
+}
+
+int is_regular_file(const char *path)
+{
+    struct stat path_stat;
+    stat(path, &path_stat);
+    return (S_ISREG(path_stat.st_mode));
 }
 
 int main(int argc, char **argv)

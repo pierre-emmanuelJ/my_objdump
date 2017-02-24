@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 11:54:09 2017 Pierre-Emmanuel Jacquier
-** Last update Fri Feb 24 19:58:12 2017 Pierre-Emmanuel Jacquier
+** Last update Fri Feb 24 21:21:29 2017 Pierre-Emmanuel Jacquier
 */
 
 #ifndef OBJDUBP_H_
@@ -19,6 +19,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <ctype.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include "flags.h"
 
@@ -54,5 +56,6 @@ void get_flag_value64(t_data_info *info);
 void get_flag_value32(t_data_info *info);
 void print_all_section64(t_data_info *info);
 void print_all_section32(t_data_info *info);
+int is_regular_file(const char *path);
 
 #endif /* !OBJDUBP_H_ */
