@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Thu Feb 23 16:32:46 2017 Pierre-Emmanuel Jacquier
-** Last update Thu Feb 23 19:32:02 2017 Pierre-Emmanuel Jacquier
+** Last update Fri Feb 24 16:40:13 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
@@ -23,20 +23,65 @@ static int is_section_to_print(t_data_info *info, int i, int type)
      strcmp(&tmp[info->shdr[i].sh_name], ".symtab") == 0);
 }
 
-void print_section(char  *section, char *next)
+
+int sh_addr_format(int addr, int size)
+{
+  int i;
+	int length;
+
+	i = 0;
+	length = addr + size;
+	while (length > 0)
+	  {
+      length = length / 16;
+		  i++;
+		}
+		if (i > 4)
+		  return (i);
+		return (4);
+}
+
+void print_section(char *section, t_data_info *info, int pos)
 {
 	int line;
+	int sh_addr;
+	int sh_size;
+	int i;
+	int j;
+	int k;
+	char str[20];
 
+	i = 0;
+	j = 0;
+	k = 0;
 	line = 0;
-	while(section <= next)
+	sh_addr = info->shdr[pos].sh_addr;
+  sh_size = (int)info->shdr[pos].sh_size;
+	printf("Contents of section %s:\n", &info->strtab[info->shdr[pos].sh_name]);
+	while(i < sh_size)
 	  {
-		  printf("%p ", section);
-		  while (line < 16)
+      printf("%0*x ", sh_addr_format(sh_addr, sh_size), sh_addr);
+		  while (j < 16)
 			  {
-			  line++;
-			  }
+			    while (k < 4)
+			      {
+			        if (i < sh_size)
+			          {
+			            printf("%02x", *section);
+			            str[j] = *section;
+			            section++;
+                }
+			        else
+				        printf(" ");
+			        i++;
+			        k++;
+			        j++;
+            }
+			    k = 0;
+          printf(" ");
+		    }
+		  j = 0;
 		  printf("\n");
-		  section++;
 	  }
 }
 
@@ -44,19 +89,15 @@ void print_all_section(t_data_info *info)
 {
   int i;
 	char *section;
-	char *next;
 
   i = 0;
-	next = (char*)info->elf_header;
+	section = (char*)info->elf_header;
   while (i < info->shnum)
     {
-		  section = (char *)(&info->shdr[i]);
-		  next += info->shdr[i].sh_offset;
+      section += info->shdr[i].sh_offset;
 		  if (is_section_to_print(info, i, info->shdr[i].sh_type))
-			{
-			  print_section(section, next);
-			}
-		  next = (char *)info->elf_header;
+			  print_section(section, info, i);
+		  section = (char *)info->elf_header;
 		  i++;
 		}
 }
