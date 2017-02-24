@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 11:54:09 2017 Pierre-Emmanuel Jacquier
-** Last update Fri Feb 24 18:50:23 2017 Pierre-Emmanuel Jacquier
+** Last update Fri Feb 24 19:23:39 2017 Pierre-Emmanuel Jacquier
 */
 
 #ifndef OBJDUBP_H_
@@ -18,6 +18,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "flags.h"
 

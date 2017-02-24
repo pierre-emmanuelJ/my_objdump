@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Thu Feb 23 16:32:46 2017 Pierre-Emmanuel Jacquier
-** Last update Fri Feb 24 19:01:44 2017 Pierre-Emmanuel Jacquier
+** Last update Fri Feb 24 19:27:26 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
@@ -41,6 +41,22 @@ int sh_addr_format(unsigned addr, int size)
 		return (4);
 }
 
+void print_str(char *str)
+{
+  int i;
+
+	i = 0;
+  printf(" ");
+	while (i < 16)
+    {
+      if (isprint(str[i]))
+        printf("%c", str[i]);
+      else
+        printf(".");
+      i++;
+    }
+}
+
 void print_line(t_section_printer *print, int *pos)
 {
   int i;
@@ -64,7 +80,7 @@ void print_line(t_section_printer *print, int *pos)
 			    }
 			  else
 			    {
-            printf(" ");
+            printf("  ");
 			      str[strpos] = ' ';
 			      strpos++;
 			    }
@@ -75,7 +91,7 @@ void print_line(t_section_printer *print, int *pos)
 		printf(" ");
 		i++;
 	}
-	print_str(str, );
+	print_str(str);
 }
 
 void print_section(char *section, t_data_info *info, int pos)
