@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 11:54:09 2017 Pierre-Emmanuel Jacquier
-** Last update Fri Feb 24 21:21:29 2017 Pierre-Emmanuel Jacquier
+** Last update Sat Feb 25 17:54:05 2017 Pierre-Emmanuel Jacquier
 */
 
 #ifndef OBJDUBP_H_
@@ -26,22 +26,22 @@
 
 typedef struct s_data_info
 {
-  Elf64_Ehdr	*elf64_header;
-  Elf64_Shdr	*shdr64;
-  Elf32_Ehdr	*elf32_header;
-  Elf32_Shdr	*shdr32;
-  char				*strtab;
-  int					flags;
-  int					shnum;
-
+  Elf64_Ehdr  *elf64_header;
+  Elf64_Shdr  *shdr64;
+  Elf32_Ehdr  *elf32_header;
+  Elf32_Shdr  *shdr32;
+  char        *strtab;
+  char        *file_path;
+  int         flags;
+  int         shnum;
 }              t_data_info;
 
 typedef struct s_section_printer
 {
-  unsigned sh_addr;
-	int sh_size;
-  char *section;
-  int  addr_format;
+  unsigned long int  sh_addr;
+  unsigned long      sh_size;
+  char               *section;
+  int                addr_format;
 }              t_section_printer;
 
 

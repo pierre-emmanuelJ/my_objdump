@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 10:15:05 2017 Pierre-Emmanuel Jacquier
-** Last update Fri Feb 24 21:23:10 2017 Pierre-Emmanuel Jacquier
+** Last update Sat Feb 25 17:31:14 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
@@ -37,6 +37,7 @@ void objdump64(void *data, char *file)
 {
   t_data_info info;
 
+  info.file_path = file;
   info.flags = 0;
   printf("\n%s:     file format elf64-x86-64\n", file);
   info.elf64_header = (Elf64_Ehdr*)data;
@@ -50,21 +51,21 @@ void objdump64(void *data, char *file)
   print_all_section64(&info);
 }
 
-void objdump(char *file, int fd)
+void objdump(char *file, int fd, char *file_path)
 {
   void				*data;
   size_t			datasize;
 
   if (!is_regular_file(file))
   {
-    fprintf(stderr, "objdump: Warning: '%s' is not an ordinary file\n", file);
+    fprintf(stderr, "%s: Warning: '%s' is not an ordinary file\n", file_path, file);
     return ;
   }
   datasize = filesize(fd);
   data = mmap(NULL, datasize, PROT_READ, MAP_SHARED, fd, 0);
   if (!iself_file(data, datasize))
     {
-      fprintf(stderr, "objdump: %s: File format not recognized\n", file);
+      fprintf(stderr, "%s: %s: File format not recognized\n", file_path, file);
       return ;
     }
   if (what_architecture(data, datasize) == ELFCLASS32)
@@ -72,14 +73,14 @@ void objdump(char *file, int fd)
   else if(what_architecture(data, datasize) == ELFCLASS64)
     objdump64(data, file);
   else
-    fprintf(stderr, "objdump: %s: File format not recognized\n", file);
+    fprintf(stderr, "%s: %s: File format not recognized\n", file_path, file);
 }
 
-int open_file(char *path, int *fd)
+int open_file(char *path, int *fd, char *file)
 {
   if ((*fd = open(path, O_RDONLY)) == -1)
     {
-      fprintf(stderr, "my_objdump: '%s': No such file\n", path);
+      fprintf(stderr, "%s: '%s': No such file\n", file, path);
       close(*fd);
       return (0);
     }
@@ -101,18 +102,18 @@ int main(int argc, char **argv)
   i = 1;
   if (argc == 1)
     {
-      if (open_file("a.out", &fd))
+      if (open_file("a.out", &fd, argv[0]))
         {
-          objdump("a.out", fd);
+          objdump("a.out", fd, argv[0]);
           close(fd);
         }
       return (0);
     }
   while (i < argc)
     {
-      if (open_file(argv[i], &fd))
+      if (open_file(argv[i], &fd, argv[0]))
         {
-          objdump(argv[i], fd);
+          objdump(argv[i], fd, argv[0]);
           close(fd);
         }
       i++;

@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Thu Feb 23 16:32:46 2017 Pierre-Emmanuel Jacquier
-** Last update Fri Feb 24 20:03:41 2017 Pierre-Emmanuel Jacquier
+** Last update Sat Feb 25 17:55:14 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
@@ -36,8 +36,21 @@ static int is_section_to_print32(t_data_info *info, int i, int type)
      strcmp(&tmp[info->shdr32[i].sh_name], ".symtab") == 0));
 }
 
-int sh_addr_format(unsigned addr, int size)
+int sh_addr_format(unsigned long addr, int size)
 {
+  // unsigned long int     size;
+  // size_t            nb;
+  // nb = 0x1;
+  // size = 0;
+  // while (nb < addr)
+  //   {
+  //     nb *= 16;
+  //     size++;
+  //   }
+  // if (size < 4)
+  //   return 4;
+  // return size;
+  //
   int i;
 	int length;
 
@@ -48,6 +61,9 @@ int sh_addr_format(unsigned addr, int size)
       length = length / 16;
 		  i++;
 		}
+  length = length % 16;
+    if (i > 6)
+      return (6);
 		if (i > 4)
 		  return (i);
 		return (4);
@@ -69,7 +85,7 @@ void print_str(char *str)
     }
 }
 
-void print_line(t_section_printer *print, int *pos)
+void print_line(t_section_printer *print, unsigned long *pos)
 {
   int i;
 	int j;
@@ -109,17 +125,17 @@ void print_line(t_section_printer *print, int *pos)
 void print_section64(char *section, t_data_info *info, int pos)
 {
 	t_section_printer print;
-	int i;
+	unsigned long i;
 
 	i = 0;
 	print.sh_addr = info->shdr64[pos].sh_addr;
-  print.sh_size = (int)info->shdr64[pos].sh_size;
+  print.sh_size = info->shdr64[pos].sh_size;
 	print.section = section;
 	printf("Contents of section %s:\n", &info->strtab[info->shdr64[pos].sh_name]);
   print.addr_format = sh_addr_format(print.sh_addr, print.sh_size);
 	while (i < print.sh_size)
     {
-		  printf(" %0*x ", print.addr_format, print.sh_addr);
+		  printf(" %0*lx ", print.addr_format, print.sh_addr);
 		  print_line(&print, &i);
 		  print.sh_addr += 16;
 		  printf("\n");
@@ -129,17 +145,17 @@ void print_section64(char *section, t_data_info *info, int pos)
 void print_section32(char *section, t_data_info *info, int pos)
 {
 	t_section_printer print;
-	int i;
+	unsigned long i;
 
 	i = 0;
 	print.sh_addr = info->shdr32[pos].sh_addr;
-  print.sh_size = (int)info->shdr32[pos].sh_size;
+  print.sh_size = info->shdr32[pos].sh_size;
 	print.section = section;
 	printf("Contents of section %s:\n", &info->strtab[info->shdr32[pos].sh_name]);
   print.addr_format = sh_addr_format(print.sh_addr, print.sh_size);
 	while (i < print.sh_size)
     {
-		  printf(" %0*x ", print.addr_format, print.sh_addr);
+		  printf(" %0*lx ", print.addr_format, print.sh_addr);
 		  print_line(&print, &i);
 		  print.sh_addr += 16;
 		  printf("\n");
