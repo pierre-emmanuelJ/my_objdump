@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 11:54:09 2017 Pierre-Emmanuel Jacquier
-** Last update Sat Feb 25 17:54:05 2017 Pierre-Emmanuel Jacquier
+** Last update Sat Feb 25 19:09:33 2017 Pierre-Emmanuel Jacquier
 */
 
 #ifndef OBJDUBP_H_
@@ -57,5 +57,6 @@ void get_flag_value32(t_data_info *info);
 void print_all_section64(t_data_info *info);
 void print_all_section32(t_data_info *info);
 int is_regular_file(const char *path);
+int is_empty_file(const char *path);
 
 #endif /* !OBJDUBP_H_ */
