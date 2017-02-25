@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 10:15:05 2017 Pierre-Emmanuel Jacquier
-** Last update Sat Feb 25 19:09:15 2017 Pierre-Emmanuel Jacquier
+** Last update Sat Feb 25 19:34:41 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
@@ -30,7 +30,6 @@ void objdump32(void *data, char *file)
   printf("start address 0x%08zx\n\n", (size_t)(info.elf32_header->e_entry));
   info.strtab = (char*)(data + info.shdr32[info.elf32_header->e_shstrndx].sh_offset);
   print_all_section32(&info);
-
 }
 
 void objdump64(void *data, char *file)

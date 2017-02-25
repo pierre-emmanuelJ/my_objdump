@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Thu Feb 23 16:32:46 2017 Pierre-Emmanuel Jacquier
-** Last update Sat Feb 25 17:55:14 2017 Pierre-Emmanuel Jacquier
+** Last update Sat Feb 25 20:09:07 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
@@ -38,19 +38,6 @@ static int is_section_to_print32(t_data_info *info, int i, int type)
 
 int sh_addr_format(unsigned long addr, int size)
 {
-  // unsigned long int     size;
-  // size_t            nb;
-  // nb = 0x1;
-  // size = 0;
-  // while (nb < addr)
-  //   {
-  //     nb *= 16;
-  //     size++;
-  //   }
-  // if (size < 4)
-  //   return 4;
-  // return size;
-  //
   int i;
 	int length;
 
@@ -85,41 +72,48 @@ void print_str(char *str)
     }
 }
 
+void print_section_line(unsigned long *pos, int *strpos, t_section_printer *print, char *str)
+{
+  int j;
+
+  j = 0;
+  while (j < 4)
+    {
+      if (*pos < print->sh_size)
+        {
+          printf("%02x", *print->section & 0xff);
+          str[*strpos] = *print->section;
+          print->section++;
+          (*strpos)++;
+        }
+      else
+        {
+          printf("  ");
+          str[*strpos] = ' ';
+          (*strpos)++;
+        }
+      (*pos)++;
+      j++;
+    }
+}
+
 void print_line(t_section_printer *print, unsigned long *pos)
 {
   int i;
-	int j;
 	int strpos;
-	char str[16];
+	char *str;
 
   i = 0;
-	j = 0;
 	strpos = 0;
+  str = malloc(sizeof(char) * 16);
   while (i < 4)
 	{
-		while (j < 4)
-			{
-			  if (*pos < print->sh_size)
-			    {
-			      printf("%02x", *print->section & 0xff);
-			      str[strpos] = *print->section;
-			      print->section++;
-			      strpos++;
-			    }
-			  else
-			    {
-            printf("  ");
-			      str[strpos] = ' ';
-			      strpos++;
-			    }
-			  (*pos)++;
-			  j++;
-			}
-		  j = 0;
+    print_section_line(pos, &strpos, print, str);
 		printf(" ");
 		i++;
 	}
 	print_str(str);
+  free(str);
 }
 
 void print_section64(char *section, t_data_info *info, int pos)
