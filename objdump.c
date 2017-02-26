@@ -5,17 +5,12 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 10:15:05 2017 Pierre-Emmanuel Jacquier
-** Last update Sat Feb 25 19:34:41 2017 Pierre-Emmanuel Jacquier
+** Last update Sun Feb 26 12:29:34 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
 
-int filesize(int fd)
-{
-  return (lseek(fd, 0, SEEK_END));
-}
-
-void objdump32(void *data, char *file)
+static void objdump32(void *data, char *file)
 {
   t_data_info info;
 
@@ -32,7 +27,7 @@ void objdump32(void *data, char *file)
   print_all_section32(&info);
 }
 
-void objdump64(void *data, char *file)
+static void objdump64(void *data, char *file)
 {
   t_data_info info;
 
@@ -50,7 +45,7 @@ void objdump64(void *data, char *file)
   print_all_section64(&info);
 }
 
-void objdump(char *file, int fd, char *file_path)
+static void objdump(char *file, int fd, char *file_path)
 {
   void				*data;
   size_t			datasize;
@@ -75,31 +70,6 @@ void objdump(char *file, int fd, char *file_path)
     objdump64(data, file);
   else
     fprintf(stderr, "%s: %s: File format not recognized\n", file_path, file);
-}
-
-int open_file(char *path, int *fd, char *file)
-{
-  if ((*fd = open(path, O_RDONLY)) == -1)
-    {
-      fprintf(stderr, "%s: '%s': No such file\n", file, path);
-      close(*fd);
-      return (0);
-    }
-  return (1);
-}
-
-int is_regular_file(const char *path)
-{
-    struct stat path_stat;
-    stat(path, &path_stat);
-    return (S_ISREG(path_stat.st_mode));
-}
-
-int is_empty_file(const char *path)
-{
-    struct stat path_stat;
-    stat(path, &path_stat);
-    return (path_stat.st_size == 0);
 }
 
 int main(int argc, char **argv)

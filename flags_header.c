@@ -5,12 +5,12 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Thu Feb 23 16:14:46 2017 Pierre-Emmanuel Jacquier
-** Last update Fri Feb 24 19:55:12 2017 Pierre-Emmanuel Jacquier
+** Last update Sun Feb 26 12:26:33 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
 
-void bitset_flagheader(int *flags, int type)
+static void bitset_flagheader(int *flags, int type)
 {
   if (type == ET_REL)
      *flags |= HAS_RELOC;
@@ -20,7 +20,7 @@ void bitset_flagheader(int *flags, int type)
      *flags |= EXEC_P;
 }
 
-void bitset_flagsections(int *flags, int type)
+static void bitset_flagsections(int *flags, int type)
 {
   if (type == SHT_SYMTAB || type == SHT_DYNSYM)
       *flags |= HAS_SYMS;

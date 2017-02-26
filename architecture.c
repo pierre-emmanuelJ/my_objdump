@@ -10,9 +10,9 @@
 
 #include "objdump.h"
 
-int what_architecture(void *data, size_t datasize)
+int     what_architecture(void *data, size_t datasize)
 {
-  char *file;
+  char  *file;
 
   if (datasize < 5)
     return (ELFCLASSNONE);
@@ -22,28 +22,4 @@ int what_architecture(void *data, size_t datasize)
   if (file[4] == ELFCLASS64)
     return (ELFCLASS64);
   return (ELFCLASSNONE);
-}
-
-void print_sh_name64(Elf64_Shdr *shdr, char *strtab, int shnum)
-{
-  int i;
-
-  i = 0;
-  while (i < shnum)
-    {
-      printf("%02d: %s\n", i, &strtab[shdr[i].sh_name]);
-      i++;
-    }
-}
-
-void print_sh_name32(Elf32_Shdr *shdr, char *strtab, int shnum)
-{
-  int i;
-
-  i = 0;
-  while (i < shnum)
-    {
-      printf("%02d: %s\n", i, &strtab[shdr[i].sh_name]);
-      i++;
-    }
 }

@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 11:54:09 2017 Pierre-Emmanuel Jacquier
-** Last update Sat Feb 25 20:02:05 2017 Pierre-Emmanuel Jacquier
+** Last update Sun Feb 26 12:30:37 2017 Pierre-Emmanuel Jacquier
 */
 
 #ifndef OBJDUBP_H_
@@ -48,8 +48,6 @@ typedef struct s_section_printer
 #define PRINTER(x, comma) printf("%s%s", comma, x); comma = ", ";
 
 int what_architecture(void *data, size_t datasize);
-void print_sh_name64(Elf64_Shdr *shdr, char *strtab, int shnum);
-void print_sh_name32(Elf32_Shdr *shdr, char *strtab, int shnum);
 int iself_file(void *data, size_t datasize);
 void print_bitset(int flag);
 void get_flag_value64(t_data_info *info);
@@ -58,5 +56,10 @@ void print_all_section64(t_data_info *info);
 void print_all_section32(t_data_info *info);
 int is_regular_file(const char *path);
 int is_empty_file(const char *path);
+int sh_addr_format(unsigned long addr, int size);
+void print_line(t_section_printer *print, unsigned long *pos);
+int open_file(char *path, int *fd, char *file);
+int filesize(int fd);
+
 
 #endif /* !OBJDUBP_H_ */

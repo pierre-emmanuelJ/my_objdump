@@ -5,7 +5,7 @@
 ## Login   <jacqui_p@epitech.eu>
 ##
 ## Started on  Wed Feb 22 11:36:14 2017 Pierre-Emmanuel Jacquier
-## Last update Thu Feb 23 19:29:33 2017 Pierre-Emmanuel Jacquier
+## Last update Sun Feb 26 12:30:07 2017 Pierre-Emmanuel Jacquier
 ##
 
 CC	= cc
@@ -22,7 +22,10 @@ SRCSOBJ	= objdump.c \
           flags_header.c \
           architecture.c \
 					elf_check.c \
-					print_sections_content.c
+					print_sections32.c \
+					print_sections64.c \
+					functions_printer.c \
+					file_infos.c
 
 
 SRCSNM	= nm.c
