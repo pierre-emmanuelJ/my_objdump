@@ -10,9 +10,9 @@
 
 #include "objdump.h"
 
-static void objdump32(void *data, char *file)
+static void     objdump32(void *data, char *file)
 {
-  t_data_info info;
+  t_data_info   info;
 
   info.flags = 0;
   printf("\n%s:     file format elf32-i386\n", file);
@@ -27,9 +27,9 @@ static void objdump32(void *data, char *file)
   print_all_section32(&info);
 }
 
-static void objdump64(void *data, char *file)
+static void     objdump64(void *data, char *file)
 {
-  t_data_info info;
+  t_data_info   info;
 
   info.file_path = file;
   info.flags = 0;
@@ -45,18 +45,18 @@ static void objdump64(void *data, char *file)
   print_all_section64(&info);
 }
 
-static void objdump(char *file, int fd, char *file_path)
+static void     objdump(char *file, int fd, char *file_path)
 {
-  void				*data;
-  size_t			datasize;
+  void          *data;
+  size_t        datasize;
 
   if (is_empty_file(file))
     return ;
   if (!is_regular_file(file))
-  {
-    fprintf(stderr, "%s: Warning: '%s' is not an ordinary file\n", file_path, file);
-    return ;
-  }
+    {
+      fprintf(stderr, "%s: Warning: '%s' is not an ordinary file\n", file_path, file);
+      return ;
+    }
   datasize = filesize(fd);
   data = mmap(NULL, datasize, PROT_READ, MAP_SHARED, fd, 0);
   if (!iself_file(data, datasize))
@@ -72,10 +72,10 @@ static void objdump(char *file, int fd, char *file_path)
     fprintf(stderr, "%s: %s: File format not recognized\n", file_path, file);
 }
 
-int main(int argc, char **argv)
+int     main(int argc, char **argv)
 {
-  int i;
-  int fd;
+  int   i;
+  int   fd;
 
   i = 1;
   if (argc == 1)

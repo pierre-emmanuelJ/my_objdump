@@ -10,32 +10,34 @@
 
 #include "objdump.h"
 
-static void bitset_flagheader(int *flags, int type)
+static  void bitset_flagheader(int *flags, int type)
 {
   if (type == ET_REL)
-     *flags |= HAS_RELOC;
-   else if (type == ET_DYN)
-     *flags |= DYNAMIC;
-   else if (type == ET_EXEC)
-     *flags |= EXEC_P;
+    *flags |= HAS_RELOC;
+  else if (type == ET_DYN)
+    *flags |= DYNAMIC;
+  else if (type == ET_EXEC)
+    *flags |= EXEC_P;
 }
 
-static void bitset_flagsections(int *flags, int type)
+static  void bitset_flagsections(int *flags, int type)
 {
   if (type == SHT_SYMTAB || type == SHT_DYNSYM)
-      *flags |= HAS_SYMS;
-    if (type == SHT_DYNAMIC)
-      *flags |= D_PAGED;
+    *flags |= HAS_SYMS;
+  if (type == SHT_DYNAMIC)
+    *flags |= D_PAGED;
 }
 
-void print_bitset(int flag)
+void    print_bitset(int flag)
 {
-  char *comma = "";
+  char  *comma;
+
+  comma = "";
   if (flag & HAS_RELOC)
     {
       PRINTER("HAS_RELOC", comma)
     }
-    if (flag & EXEC_P)
+  if (flag & EXEC_P)
     {
       PRINTER("EXEC_P", comma)
     }
@@ -54,10 +56,10 @@ void print_bitset(int flag)
   printf("\n");
 }
 
-void get_flag_value64(t_data_info *info)
+void    get_flag_value64(t_data_info *info)
 {
-  int i;
-  int flags;
+  int   i;
+  int   flags;
 
   flags = 0;
   i = 0;
@@ -70,10 +72,10 @@ void get_flag_value64(t_data_info *info)
   info->flags = flags;
 }
 
-void get_flag_value32(t_data_info *info)
+void    get_flag_value32(t_data_info *info)
 {
-  int i;
-  int flags;
+  int   i;
+  int   flags;
 
   flags = 0;
   i = 0;

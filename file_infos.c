@@ -10,12 +10,12 @@
 
 #include "objdump.h"
 
-int filesize(int fd)
+int     filesize(int fd)
 {
   return (lseek(fd, 0, SEEK_END));
 }
 
-int open_file(char *path, int *fd, char *file)
+int     open_file(char *path, int *fd, char *file)
 {
   if ((*fd = open(path, O_RDONLY)) == -1)
     {
@@ -26,16 +26,18 @@ int open_file(char *path, int *fd, char *file)
   return (1);
 }
 
-int is_regular_file(const char *path)
+int             is_regular_file(const char *path)
 {
-    struct stat path_stat;
-    stat(path, &path_stat);
-    return (S_ISREG(path_stat.st_mode));
+  struct stat   path_stat;
+
+  stat(path, &path_stat);
+  return (S_ISREG(path_stat.st_mode));
 }
 
-int is_empty_file(const char *path)
+int             is_empty_file(const char *path)
 {
-    struct stat path_stat;
-    stat(path, &path_stat);
-    return (path_stat.st_size == 0);
+  struct stat   path_stat;
+
+  stat(path, &path_stat);
+  return (path_stat.st_size == 0);
 }

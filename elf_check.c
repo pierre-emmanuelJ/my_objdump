@@ -10,9 +10,9 @@
 
 #include "objdump.h"
 
-int iself_file(void *data, size_t datasize)
+int     iself_file(void *data, size_t datasize)
 {
-  char *file;
+  char  *file;
 
   if (datasize < 4)
     return (0);
