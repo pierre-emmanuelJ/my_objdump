@@ -23,7 +23,8 @@ static void     objdump32(void *data, char *file)
   printf("architecture: i386, flags 0x%08x:\n", info.flags);
   print_bitset(info.flags);
   printf("start address 0x%08zx\n\n", (size_t)(info.elf32_header->e_entry));
-  info.strtab = (char*)(data + info.shdr32[info.elf32_header->e_shstrndx].sh_offset);
+  info.strtab = (char*)(data +
+                        info.shdr32[info.elf32_header->e_shstrndx].sh_offset);
   print_all_section32(&info);
 }
 
@@ -41,7 +42,8 @@ static void     objdump64(void *data, char *file)
   printf("architecture: i386:x86-64, flags 0x%08x:\n", info.flags);
   print_bitset(info.flags);
   printf("start address 0x%016zx\n\n", (info.elf64_header->e_entry));
-  info.strtab = (char*)(data + info.shdr64[info.elf64_header->e_shstrndx].sh_offset);
+  info.strtab = (char*)(data +
+                        info.shdr64[info.elf64_header->e_shstrndx].sh_offset);
   print_all_section64(&info);
 }
 
@@ -54,7 +56,8 @@ static void     objdump(char *file, int fd, char *file_path)
     return ;
   if (!is_regular_file(file))
     {
-      fprintf(stderr, "%s: Warning: '%s' is not an ordinary file\n", file_path, file);
+      fprintf(stderr, "%s: Warning: '%s' is not an ordinary file\n",
+              file_path, file);
       return ;
     }
   datasize = filesize(fd);
@@ -66,7 +69,7 @@ static void     objdump(char *file, int fd, char *file_path)
     }
   if (what_architecture(data, datasize) == ELFCLASS32)
     objdump32(data, file);
-  else if(what_architecture(data, datasize) == ELFCLASS64)
+  else if (what_architecture(data, datasize) == ELFCLASS64)
     objdump64(data, file);
   else
     fprintf(stderr, "%s: %s: File format not recognized\n", file_path, file);

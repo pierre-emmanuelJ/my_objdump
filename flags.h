@@ -1,3 +1,13 @@
+/*
+** flags.h for  in /home/jacqui_p/rendu/PSU_2016_nmobjdump/
+**
+** Made by Pierre-Emmanuel Jacquier
+** Login   <jacqui_p@epitech.eu>
+**
+** Started on  Sun Feb 26 14:41:23 2017 Pierre-Emmanuel Jacquier
+** Last update Sun Feb 26 14:41:26 2017 Pierre-Emmanuel Jacquier
+*/
+
 #ifndef __BFD_H_SEEN__
 # define __BFD_H_SEEN__
 

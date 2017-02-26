@@ -37,7 +37,8 @@ static void             print_section64(char *section,
   print.sh_addr = info->shdr64[pos].sh_addr;
   print.sh_size = info->shdr64[pos].sh_size;
   print.section = section;
-  printf("Contents of section %s:\n", &info->strtab[info->shdr64[pos].sh_name]);
+  printf("Contents of section %s:\n",
+         &info->strtab[info->shdr64[pos].sh_name]);
   print.addr_format = sh_addr_format(print.sh_addr, print.sh_size);
   while (i < print.sh_size)
     {

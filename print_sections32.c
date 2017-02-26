@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Sun Feb 26 12:12:38 2017 Pierre-Emmanuel Jacquier
-** Last update Sun Feb 26 12:25:37 2017 Pierre-Emmanuel Jacquier
+** Last update Sun Feb 26 14:49:12 2017 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
@@ -37,7 +37,8 @@ static void             print_section32(char *section,
   print.sh_addr = info->shdr32[pos].sh_addr;
   print.sh_size = info->shdr32[pos].sh_size;
   print.section = section;
-  printf("Contents of section %s:\n", &info->strtab[info->shdr32[pos].sh_name]);
+  printf("Contents of section %s:\n",
+         &info->strtab[info->shdr32[pos].sh_name]);
   print.addr_format = sh_addr_format(print.sh_addr, print.sh_size);
   while (i < print.sh_size)
     {
