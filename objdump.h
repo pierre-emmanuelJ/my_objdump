@@ -23,7 +23,23 @@
 # include <sys/stat.h>
 # include "flags.h"
 
-# define PRINTER(x, comma) printf("%s%s", comma, x); comma = ", ";
+/*
+** yan typedef Elf64_Ehdr
+*/
+
+/*
+** yan typedef Elf64_Shdr
+*/
+
+/*
+** yan typedef Elf32_Ehdr
+*/
+
+/*
+** yan typedef Elf32_Shdr
+*/
+
+# define PRINTER(x, comma) printf("%s%s", comma, x); comma = ", "
 
 typedef struct  s_data_info
 {

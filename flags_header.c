@@ -35,23 +35,23 @@ void    print_bitset(int flag)
   comma = "";
   if (flag & HAS_RELOC)
     {
-      PRINTER("HAS_RELOC", comma)
+      PRINTER("HAS_RELOC", comma);
     }
   if (flag & EXEC_P)
     {
-      PRINTER("EXEC_P", comma)
+      PRINTER("EXEC_P", comma);
     }
   if (flag & HAS_SYMS)
     {
-      PRINTER("HAS_SYMS", comma)
+      PRINTER("HAS_SYMS", comma);
     }
   if (flag & DYNAMIC)
     {
-      PRINTER("DYNAMIC", comma)
+      PRINTER("DYNAMIC", comma);
     }
   if (flag & D_PAGED)
     {
-      PRINTER("D_PAGED", comma)
+      PRINTER("D_PAGED", comma);
     }
   printf("\n");
 }
