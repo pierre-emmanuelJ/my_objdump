@@ -5,11 +5,11 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Sun Feb 26 14:41:23 2017 Pierre-Emmanuel Jacquier
-** Last update Sun Feb 26 14:41:26 2017 Pierre-Emmanuel Jacquier
+** Last update Wed Mar  1 13:59:18 2017 Pierre-Emmanuel Jacquier
 */
 
-#ifndef __BFD_H_SEEN__
-# define __BFD_H_SEEN__
+#ifndef FLAGS_H_
+# define FLAGS_H_
 
 /*
 ** Values that may appear in the flags field of a BFD.  These also
@@ -36,7 +36,7 @@
 # define EXEC_P          0x02
 
 /*
-** BFD has line number information (basically used for F_LNNO in a COFF header).
+** BFD has line number information (basically used for F_LNNO in a COFF header)
 */
 # define HAS_LINENO      0x04
 
@@ -73,4 +73,4 @@
 */
 # define D_PAGED         0x100
 
-#endif /* !__BFD_H_SEEN__ */
+#endif /* !FLAGS_H_ */
