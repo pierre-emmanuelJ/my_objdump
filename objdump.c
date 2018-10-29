@@ -5,7 +5,7 @@
 ** Login   <jacqui_p@epitech.eu>
 **
 ** Started on  Wed Feb 22 10:15:05 2017 Pierre-Emmanuel Jacquier
-** Last update Sun Feb 26 12:29:34 2017 Pierre-Emmanuel Jacquier
+** Last update Tue Oct 29 10:03:21 PM 2018 Pierre-Emmanuel Jacquier
 */
 
 #include "objdump.h"
@@ -83,12 +83,8 @@ int     main(int argc, char **argv)
   i = 1;
   if (argc == 1)
     {
-      if (open_file("a.out", &fd, argv[0]))
-        {
-          objdump("a.out", fd, argv[0]);
-          close(fd);
-        }
-      return (0);
+      fprintf(stderr, "usage:\n%s <elf file | so file> \n", argv[0]);
+      return (1);
     }
   while (i < argc)
     {
